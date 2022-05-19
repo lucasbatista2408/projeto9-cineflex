@@ -30,7 +30,7 @@ export default function App(){
       <Routes>
         <Route path="/" element={<MovieList />} />
         <Route path="/filme/:MovieId" element={<TimeTable/>} />
-        <Route path="/sessao/240" element={<SessionInfo />} />
+        <Route path="/sessao/:SessionId" element={<SessionInfo />} />
         <Route path="/sucesso" element={<Confirmation />} />
       </Routes>
     </BrowserRouter>
