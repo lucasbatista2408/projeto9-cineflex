@@ -4,9 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./Header.js"
 import MovieList from "./MovieList.js"
 import TimeTable from "./TimeTable.js"
-import SessionInfo from "./SessionInfo.js"
+import SeatInfo from "./SeatInfo.js"
 import Confirmation from "./Confirmation.js"
-import Footer from "./Footer.js"
 
 export default function App(){
 
@@ -29,8 +28,8 @@ export default function App(){
       <Header />
       <Routes>
         <Route path="/" element={<MovieList />} />
-        <Route path="/filme/:MovieId" element={<TimeTable/>} />
-        <Route path="/sessao/:SessionId" element={<SessionInfo />} />
+        <Route path="/filme/:MovieId" element={<TimeTable />} />
+        <Route path="/sessao/:SeatId" element={<SeatInfo />} />
         <Route path="/sucesso" element={<Confirmation />} />
       </Routes>
     </BrowserRouter>

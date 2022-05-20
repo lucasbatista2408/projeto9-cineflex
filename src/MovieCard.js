@@ -12,7 +12,7 @@ export default function MovieCard({id, title, url, description, release}){
     <>
       <Link to={`/filme/${id}`} >
         <MovieC>
-          <img onClick={() => {setPage(true)} } src={url} alt="poster"></img>
+          <img src={url} alt="poster"></img>
         </MovieC>
       </Link>
     </>

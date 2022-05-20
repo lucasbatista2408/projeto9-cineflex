@@ -40,11 +40,9 @@ export default function MovieList(data){
 }
 
 const MovieL = styled.div`
-  overflow:scroll;
   min-width: 365px;
   width: 100%;
   margin-top: 70px;
-  margin-bottom: 120px;
   height: 100vh;
 `
 const Banner = styled.div`

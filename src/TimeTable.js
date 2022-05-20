@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components"
 import {useParams} from "react-router-dom"
+import {Link} from "react-router-dom";
 import axios from "axios"
 import Footer from "./Footer"
 import Session from "./Session"
 
 
-export default function TimeTable(){
+export default function TimeTable(data){
 
   const {MovieId} = useParams();
   console.log(MovieId)

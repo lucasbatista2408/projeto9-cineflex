@@ -10,7 +10,7 @@ export default function Session({id, day, date, showtime}){
     <Sess>
       <h1>{day} - {date} </h1>
       {showtime.map(clock => 
-      <Link to={`/sessao/${id}`} >
+      <Link to={`/sessao/${clock.id}`}>
         <button>
           {clock.name}
         </button>
