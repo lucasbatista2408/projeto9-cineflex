@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import {useParams} from "react-router-dom"
+import {useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import Seat from "./Seat"
 
@@ -11,6 +11,7 @@ export default function SeatInfo(){
   const [footer, setFooter] = React.useState([])
   const [time, setTime] = React.useState([])
   const [day, setDay] = React.useState([])
+  const [sNumber, setSNumber] = React.useState([])
 
   function axiosRequest(){
     const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${SeatId}/seats`)
@@ -22,14 +23,38 @@ export default function SeatInfo(){
     })
   }
 
-  console.log(chair)
-  console.log(footer)
-  console.log(time)
-  console.log(day.weekday)
+
+  const[name, setName] = React.useState('')
+  const[cpf, setCpf] = React.useState('')
+  const[seatNumber, setSeatNumber] = React.useState([])
+
+  console.log(cpf)
+  console.log(name)
+  console.log(sNumber)
 
   React.useEffect(() => {
     axiosRequest()
   },[])
+
+
+  function ReserveSeat(e) {
+		e.preventDefault(); 
+    const send ={
+        ids: [sNumber],
+        name: `${name}`,
+        cpf: `${cpf}`
+      }
+    
+    const post = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", send)
+    post.then(HandleSucess)
+    post.catch(console.log('deu ruim'))
+
+  }
+
+  function HandleSucess(){
+    useNavigate('/sucesso',{state:{sNumber: {sNumber}, cpf: {cpf}, name: {name} }})
+  }
+
 
   return(
     <>
@@ -38,7 +63,14 @@ export default function SeatInfo(){
         <h1>Selecione o(s) Assento(s)</h1>
       </Banner>
       <Map>
-        {chair.map((seat,key) => <Seat id={seat.id} number={seat.name} status={seat.isAvailable} />)}
+        {chair.map((seat,key) => <Seat 
+        sNumber ={sNumber}
+        setSNumber ={setSNumber}
+        setSeatNumber={setSeatNumber} 
+        seatNumber={seatNumber} 
+        id={seat.id} 
+        number={seat.name} 
+        status={seat.isAvailable} />)}
       </Map>
       <Subtitles>
         <Selecionado>
@@ -55,11 +87,11 @@ export default function SeatInfo(){
         </Taken>
       </Subtitles>
       <Form>
-        <label for="campoNome">Nome do Comprador:</label>
-        <input type="text" placeholder="Digite seu nome..." name="name"/>
-        <label for="campoCPF">CPF do Comprador:</label>
-        <input type="number" placeholder="Digite seu CPF..." name="CPF"/>
-        <button> Reservar Assento </button>
+        <label htmlFor="campoNome">Nome do Comprador:</label>
+        <input onChange={e => setName(e.target.value)} type="text" placeholder="Digite seu nome..." name="name"/>
+        <label htmlFor="campoCPF">CPF do Comprador:</label>
+        <input onChange={e => setCpf(e.target.value)} type="number" placeholder="Digite seu CPF..." name="CPF"/>
+        <button type="submit" onClick={ReserveSeat} > Reservar Assento </button>
       </Form>
     </SeatI>
     <Footer>

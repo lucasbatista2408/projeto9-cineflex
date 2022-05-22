@@ -1,16 +1,22 @@
 import React from "react"
 import styled from "styled-components"
 
-export default function Seat({id, number, status}){
+export default function Seat({id, number, status, setSeatNumber, seatNumber, sNumber, setSNumber}){
 
-  const [selec, setSelec] = React.useState('')
 
   function handleClick(e){
     e.preventDefault();
     e.target.style.background = '#8DD7CF'
     e.target.style.border = '1px solid #8DD7CF'
-    console.log(e.target);
+    handleSeat(id, number);
 }
+
+  function handleSeat(id, number){
+    const array2 = [...sNumber, number]
+    const array = [...seatNumber, id]
+    setSeatNumber(array)
+    setSNumber(array2)
+  }
 
   return(
       <MapN>
@@ -24,6 +30,7 @@ export default function Seat({id, number, status}){
         </button>} 
       </MapN>
   )
+
 }
 
 const MapN = styled.div`
