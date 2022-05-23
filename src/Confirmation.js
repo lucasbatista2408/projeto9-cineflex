@@ -1,16 +1,17 @@
 import styled from "styled-components"
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 export default function Confirmation(){
 
   const location = useLocation()
-  const { sNumber, name, cpf } = location.state
-  console.log(sNumber.sNumber)
-  console.log(name.name)
-  const assento = sNumber.sNumber;
-  const nome = name.name;
-  const doc = cpf.cpf
+  const { sNumber, cpf, name, title, weekday, time } = location.state
+  console.log(sNumber)
+  console.log(title)
+
+  function BackHome(e){
+    useNavigate("/")
+  }
 
   return(
     <Confirm>
@@ -19,19 +20,19 @@ export default function Confirmation(){
       </Banner>
       <MovieTime>
         <h1>Filme e sessão</h1>
-        <h2>Movie</h2>
-        <h2>Time</h2>
+        <h2>{title}</h2>
+        <h2>{weekday} - {time}</h2>
       </MovieTime>
       <Tickets>
         <h1>Ingressos</h1>
-        {assento.map( (seat,key) => <p> Assento {seat}</p>)}
+        {sNumber.map( (seat,key) => <p> Assento {seat}</p>)}
       </Tickets>
       <Information>
         <h1>Comprador:</h1>
-        <h2>Nome: {nome}</h2>
-        <h2>CPF: {doc}</h2>
+        <h2>Nome: {name}</h2>
+        <h2>CPF: {cpf}</h2>
       </Information>
-      <Button> 
+      <Button onClick={BackHome}> 
         <button>Voltar pra Home</button>
       </Button>
     </Confirm>
@@ -66,7 +67,7 @@ const MovieTime = styled.div`
   color: #293845;
   h1{
     font-size: 24px;
-    font-weight: 700px;
+    font-weight: bold;
     margin-bottom: 10px;
   }
   h2{
@@ -80,10 +81,10 @@ const Tickets = styled.div`
   color: #293845;
   h1{
     font-size: 24px;
-    font-weight: 700px;
+    font-weight: bold;
     margin-bottom: 10px;
   }
-  h2{
+  p{
     font-size: 22px;
     font-weight: 400;
   }
@@ -97,7 +98,7 @@ const Information = styled.div`
 
   h1{
     font-size: 24px;
-    font-weight: 700px;
+    font-weight: bold;
     margin-bottom: 10px;
   }
   h2{

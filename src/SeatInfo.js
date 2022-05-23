@@ -1,4 +1,4 @@
-import React from "react"
+import {useState , useEffect} from "react"
 import styled from "styled-components"
 import {useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
@@ -7,11 +7,12 @@ import Seat from "./Seat"
 export default function SeatInfo(){
 
   const {SeatId} = useParams();
-  const [chair, setChair] = React.useState([])
-  const [footer, setFooter] = React.useState([])
-  const [time, setTime] = React.useState([])
-  const [day, setDay] = React.useState([])
-  const [sNumber, setSNumber] = React.useState([])
+  const [chair, setChair] = useState([])
+  const [footer, setFooter] = useState([])
+  const [time, setTime] = useState([])
+  const [day, setDay] = useState([])
+  const [sNumber, setSNumber] = useState([])
+  const navigate = useNavigate();
 
   function axiosRequest(){
     const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${SeatId}/seats`)
@@ -24,36 +25,50 @@ export default function SeatInfo(){
   }
 
 
-  const[name, setName] = React.useState('')
-  const[cpf, setCpf] = React.useState('')
-  const[seatNumber, setSeatNumber] = React.useState([])
+  const[name, setName] = useState('')
+  const[cpf, setCpf] = useState('')
+  const[seatNumber, setSeatNumber] = useState([])
+  const title = footer.title;
+  const weekday = day.weekday;
 
-  console.log(cpf)
-  console.log(name)
-  console.log(sNumber)
 
-  React.useEffect(() => {
+  // console.log(chair)
+  // console.log(cpf)
+  // console.log(name)
+  // console.log(sNumber)
+  // console.log(title)
+  // console.log(weekday)
+  // console.log(time)
+
+  useEffect(() => {
     axiosRequest()
   },[])
-
 
   function ReserveSeat(e) {
 		e.preventDefault(); 
     const send ={
-        ids: [sNumber],
-        name: `${name}`,
-        cpf: `${cpf}`
+        ids: seatNumber,
+        name: name,
+        cpf: cpf
       }
-    
+
+    console.log(send)
+
     const post = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", send)
-    post.then(HandleSucess)
-    post.catch(console.log('deu ruim'))
+    
+    post.then((res) => {
+      console.log('aqui');
+      navigate("/sucesso", {state:{sNumber, cpf, name, title, weekday, time}})
+    })
+    post.catch((error) => {
+      console.log(error)
+    })
 
   }
 
-  function HandleSucess(){
-    useNavigate('/sucesso',{state:{sNumber: {sNumber}, cpf: {cpf}, name: {name} }})
-  }
+  // function HandleSucess(){
+  //   useNavigate('/sucesso', { state:{sNumber, cpf, name} })
+  // }
 
 
   return(
@@ -91,7 +106,7 @@ export default function SeatInfo(){
         <input onChange={e => setName(e.target.value)} type="text" placeholder="Digite seu nome..." name="name"/>
         <label htmlFor="campoCPF">CPF do Comprador:</label>
         <input onChange={e => setCpf(e.target.value)} type="number" placeholder="Digite seu CPF..." name="CPF"/>
-        <button type="submit" onClick={ReserveSeat} > Reservar Assento </button>
+        <button type="submit" onClick={ReserveSeat}> Reservar Assento </button>
       </Form>
     </SeatI>
     <Footer>
