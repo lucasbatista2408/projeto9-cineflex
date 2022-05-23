@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 
 export default function Confirmation(){
@@ -9,8 +9,10 @@ export default function Confirmation(){
   console.log(sNumber)
   console.log(title)
 
+  let navigate = useNavigate()
+
   function BackHome(e){
-    useNavigate("/")
+    navigate("/")
   }
 
   return(
@@ -32,8 +34,8 @@ export default function Confirmation(){
         <h2>Nome: {name}</h2>
         <h2>CPF: {cpf}</h2>
       </Information>
-      <Button onClick={BackHome}> 
-        <button>Voltar pra Home</button>
+      <Button> 
+        <button onClick={BackHome}>Voltar pra Home</button>
       </Button>
     </Confirm>
   )

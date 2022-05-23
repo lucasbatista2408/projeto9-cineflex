@@ -1,6 +1,6 @@
 import {useState , useEffect} from "react"
 import styled from "styled-components"
-import {useParams, Link, useNavigate} from "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import axios from "axios"
 import Seat from "./Seat"
 
